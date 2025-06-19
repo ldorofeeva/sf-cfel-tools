@@ -131,5 +131,5 @@ class JFCFELExporter:
                                  ], axis=0)
         with lock:
             with h5py.File(self.export_file_name, "a") as export_f:
-                export_f[CFEL_DATA_TAG][index] = avg_img
+                export_f[self.st_data_tag][index] = avg_img
         print(f"\t{me} Processed file #{index:04d}")
