@@ -1,0 +1,9 @@
+SOURCE_DIR = "/sf/bernina/exp/25g_chapman/raw"
+EXPORT_DIR = "/sf/bernina/exp/25g_chapman/work"
+DETECTOR_NAME = "JF07T32V01"
+JF_PEDESTAL = "/sf/bernina/exp/example_data/Ge_tt/pedestal_20190304_0545.JF07T32V01.res.h5"
+JF_GAIN = "/sf/jungfrau/config/gainMaps/JF07T32V01/gains.h5"
+JF_SHAPE = (4432, 4215)
+ST_DATA_TAG = "/entry/data/data"
+ST_SIM_POS_TAG = "/entry/positions/sim_positions"
+ST_LOG_POS_TAG = "/entry/positions/log_positions"

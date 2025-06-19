@@ -1,0 +1,14 @@
+{
+  "detector_name": "JF07T32V01",
+  "jf_pedestal": "/sf/bernina/exp/example_data/Ge_tt/pedestal_20190304_0545.JF07T32V01.res.h5",
+  "jf_gain": "/sf/jungfrau/config/gainMaps/JF07T32V01/gains.h5",
+  "jf_shape": [4432, 4215],
+  "source_dir": "/sf/bernina/exp/25g_chapman/work/test/raw/",
+  "export_dir": "/sf/bernina/exp/25g_chapman/work/test/work/",
+  "st_data_tag": "/entry/data/data",
+  "st_sim_pos_tag": "/entry/positions/sim_positions",
+  "st_log_pos_tag": "/entry/positions/log_positions",
+  "roi_1": [2500, 2800],
+  "roi_2": [200, 500],
+  "num_avg": 500
+}
