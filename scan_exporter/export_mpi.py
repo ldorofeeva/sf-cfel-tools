@@ -1,17 +1,14 @@
+import json
 import os
 import sys
 import time
-import random
 
 import h5py
-import json
-
-import jungfrau_utils as ju
 import numpy as np
-from sfdata import SFScanInfo
 from mpi4py import MPI
+from sfdata import SFScanInfo
 
-from util import prepare_file, generate_export_file_name, process_one_frame
+from scan_exporter.util import prepare_file, generate_export_file_name, process_one_frame
 
 if __name__ == "__main__":
     comm = MPI.COMM_WORLD

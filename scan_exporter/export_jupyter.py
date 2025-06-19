@@ -9,13 +9,13 @@ import jungfrau_utils as ju
 import numpy as np
 from sfdata import SFScanInfo
 
-from constants import (
+from scan_exporter.constants import (
     SOURCE_DIR, EXPORT_DIR,
     DETECTOR_NAME,
     JF_PEDESTAL, JF_GAIN, JF_SHAPE,
     ST_DATA_TAG, ST_SIM_POS_TAG, ST_LOG_POS_TAG
 )
-from util import prepare_file, generate_export_file_name
+from scan_exporter.util import prepare_file, generate_export_file_name
 
 
 class JFCFELExporter:
