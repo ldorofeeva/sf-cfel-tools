@@ -5,7 +5,7 @@ from threading import Event
 import numpy as np
 import zmq
 from h5py import File
-from streak_finder.ndimage import draw_lines
+#from streak_finder.ndimage import draw_lines
 
 PORT = 60123
 FLAGS = 0
@@ -38,19 +38,23 @@ class DaqStreamEmulator:
         self.md = {
             "shape": (2, 2),  # Empty frame
             "is_good_frame": True,
-            "pedestal_file": "/sf/bernina/exp/example_data/Ge_tt/pedestal_20190304_0545.JF07T32V01.res.h5",
+            "pedestal_file": "/sf/jungfrau/data/pedestal/JF07T32V01/20230414_100746.h5",  # "/sf/bernina/exp/example_data/Ge_tt/pedestal_20190304_0545.JF07T32V01.res.h5",
             "detector_name": "JF07T32V01",
             "gain_file": "/sf/jungfrau/config/gainMaps/JF07T32V01/gains.h5"
         }
         self.iter = 0
 
     def load_data(self):
-        with File(self.data_file, "r") as df:
-            self.data = np.asarray(df[self.dset_tag])[:50]
+        if self.data_file.endswith(".h5"):
+            with File(self.data_file, "r") as df:
+                self.data = np.asarray(df[self.dset_tag])[:50]
+        elif self.data_file.endswith(".npy"):
+            self.data = np.load(self.data_file)
 
     def _gen_data_frame(self):
         idx = self.iter % self.data.shape[0]
-        im = np.ascontiguousarray(self.data[idx, :16384, :1024])
+        im = np.ascontiguousarray(self.data[idx])
+        return im
 
         rng = np.random.default_rng(immax)
         shape = im.shape
@@ -94,7 +98,8 @@ class DaqStreamEmulator:
 
 
 if __name__ == "__main__":
-    df = "/sf/bernina/exp/25g_chapman/work/data/lyso009a_0087.JF07T32V01.h5"
+    df = "/sf/bernina/exp/25g_chapman/work/data/sim_raw.npy" 
+    # "/sf/bernina/exp/25g_chapman/work/data/lyso009a_0087.JF07T32V01.h5"
     if len(sys.argv) >= 2:
         df = sys.argv[1]
     dst = "data/data"
@@ -102,3 +107,4 @@ if __name__ == "__main__":
         dst = sys.argv[2]
     publisher = DaqStreamEmulator(data_file=df, dset_tag=dst)
     publisher.run()
+
