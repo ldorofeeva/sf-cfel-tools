@@ -29,7 +29,7 @@ Data file example (lysosime, default):
 source /sf/jungfrau/applications/miniconda3/etc/profile.d/conda.sh
 conda activate dap-clone
 
-cd /das/work/p22/p22263/scripts/dap_test
+cd /das/work/p22/p22263/git/sf-cfel-tools/dap_test
 python publisher.py
 ```
 
@@ -44,7 +44,7 @@ Simulated data - coming soon from Chufeng
 
 ### 2. DAP worker
 
-Updated Code directory: `/das/work/p22/p22263/git/dap-clone`
+Updated Code directory: `/das/work/p22/p22263/git/dap`
 
 
 ##### 2.0 SSH to RA job node if not done so yet:
@@ -55,13 +55,14 @@ Updated Code directory: `/das/work/p22/p22263/git/dap-clone`
 source /sf/jungfrau/applications/miniconda3/etc/profile.d/conda.sh
 conda activate dap-clone
 
-cd /das/work/p22/p22263/git/dap-clone
+cd /das/work/p22/p22263/git/dap
 export PYTHONPATH=`pwd` 
         
-python dap/worker.py --backend_address tcp://127.0.0.1:60123 \         
-    --visualisation_host 127.0.0.1 --visualisation_port 60124 \         
-    --peakfinder_parameters ./dap/example_settings.json
+python dap/worker.py --backend_address tcp://127.0.0.1:60123 \
+        --visualisation_host 127.0.0.1 --visualisation_port 60124 \
+        --peakfinder_parameters ./dap/example_settings.json
 ```
+
 
 ### 3. Streamvis
 

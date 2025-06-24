@@ -66,12 +66,12 @@ class JFCFELExporter:
         if self.scan_info is None:
             print(f"No scan info loaded!")
             return
-
+        self.export_file_name = generate_export_file_name(
+            export_dir=self.export_dir, scan_id=self.scan_id
+        )
         print(f"Exporting Scan with parameters:\n"
               f"{self}")
         log_positions = self.scan_info.readbacks
-        sim_positions = self.scan_info.values
-        axes_names = self.scan_info.parameters['name']
         num_steps = len(log_positions)
         shape = self.jf_shape
         for dim in [1,2]:

@@ -35,12 +35,16 @@ Example settings:
 ```
 
 ### Run in an interactive session as a script
-
-Start interactive session (example below is for 4 hours):
+#### Preparation
+Start interactive session (example below is for 10 hours):
 
 ```
-srun --partition=day --ntasks=32 --mem=0 --exclusive --pty bash -i
+ srun --partition=day --time=600 --ntasks-per-node=14 --nodes=2 --exclusive --mem=0 --x11 --pty bash -i
 ```
+
+Note that due to memory limitation no more than 14 CPUs per node should be used (if averaging 100 JF frames).
+More frames to avg - more memory consumption per CPU - less CPUs per node should be used.
+Note: Full frames vs ROI makes almost NO difference. Num frames to avg matters.
 
 Activate environment:
 
@@ -53,12 +57,13 @@ Go to common scripts dir:
 
 ```
 cd /sf/bernina/exp/25g_chapman/work/scripts/scan_exporter
+export PYTHONPATH=`pwd`
 ```
 
-
+#### Execution
 Run exporter with scan id argument:
 ```
-mpiexec -np 10 python exporter.py 1
+mpiexec -np 28 python export_mpi.py <scan_id>
 ```
 
 Example output:
@@ -76,6 +81,7 @@ Exported to /sf/bernina/exp/25g_chapman/work/test/work/scan0001_proc_0245.h5
 Export completed in 68.40982913970947 seconds on 10 CPUs
 
 ```
+#### Troubleshooting
 
 ### Use from jupyter notebook 
 

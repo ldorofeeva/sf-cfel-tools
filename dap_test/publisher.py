@@ -45,12 +45,15 @@ class DaqStreamEmulator:
         self.iter = 0
 
     def load_data(self):
-        with File(self.data_file, "r") as df:
-            self.data = np.asarray(df[self.dset_tag])[:50]
+        if self.data_file.endswith(".h5"):
+            with File(self.data_file, "r") as df:
+                self.data = np.asarray(df[self.dset_tag])[:50]
+        elif self.data_file.endswith(".npy"):
+            self.data = np.load(self.data_file)
 
     def _gen_data_frame(self):
         idx = self.iter % self.data.shape[0]
-        im = np.ascontiguousarray(self.data[idx, :16384, :1024])
+        im = np.ascontiguousarray(self.data[idx])
 
         rng = np.random.default_rng(immax)
         shape = im.shape
