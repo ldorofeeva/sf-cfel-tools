@@ -6,23 +6,25 @@ import numpy as np
 import zmq
 from h5py import File
 
-PORT = 60123
 FLAGS = 0
 
 
 class DaqStreamEmulator:
+    PORT = 60123
+    HOST = "*"
+
     def __init__(
             self,
             data_file: str,
             rate_s: int,
+            socket_type: int = zmq.PUSH
     ):
-        self.host = "*"
         self.rate_s = rate_s
         self.stopped = Event()
 
         zmq_context = zmq.Context()  # io_threads=4)
-        self.pub_sock = zmq_context.socket(zmq.PUSH)
-        address = f"tcp://{self.host}:{PORT}"
+        self.pub_sock = zmq_context.socket(socket_type=socket_type)
+        address = f"tcp://{self.HOST}:{self.PORT}"
         self.pub_sock.bind(address)
 
         self.data = None

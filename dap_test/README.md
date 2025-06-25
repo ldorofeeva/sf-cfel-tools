@@ -75,7 +75,12 @@ python dap/worker.py --backend_address tcp://127.0.0.1:60123 \
 source /sf/jungfrau/applications/miniconda3/etc/profile.d/conda.sh
 conda activate streamvis
 
-streamvis bernina --connection-mode bind --address tcp://*:60124
+cd /das/work/p22/p22263/git/streamvis
+
+# Optionally - deploy local changes
+# pip install .
+
+streamvis cbd --connection-mode bind --address tcp://*:60124
 ```
 
 ### 4. View streamvis in browser on Ra login node 
