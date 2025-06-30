@@ -80,7 +80,7 @@ cd /das/work/p22/p22263/git/streamvis
 # Optionally - deploy local changes
 # pip install .
 
-streamvis cbd --connection-mode bind --address tcp://*:60124
+streamvis cbd --stream-format jfcbd --connection-mode bind --address tcp://*:60124
 ```
 
 ### 4. View streamvis in browser on Ra login node 
