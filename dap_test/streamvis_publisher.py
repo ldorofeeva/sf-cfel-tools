@@ -16,9 +16,9 @@ class ProcessedDataStreamEmulator(DaqStreamEmulator):
     PORT = 9001
     HOST = "127.0.0.1"
 
-    def __init__(self, data_file: str, rate_s: int):
+    def __init__(self, start_pulse_id: int, data_file: str, rate_s: float):
         super().__init__(data_file, rate_s, socket_type=zmq.PUB)
-
+        self.start_pulse_id = start_pulse_id
         self.md = {
             "shape": (2, 2),  # Empty frame
             "is_good_frame": True,
@@ -59,6 +59,22 @@ class ProcessedDataStreamEmulator(DaqStreamEmulator):
 
         streaks = np.asarray(streaks_t).T.tolist()
 
+        pulse_mixup = {
+            0: 0,
+            1: 2,
+            2: 3,
+            3: 1,
+            4: 5,
+            5: 4,
+            6: 6,
+            7: 9,
+            8: 7,
+            9: 8,
+        }
+        pulse_id = int( self.iter * 100 + np.random.randint(0, 9) + self.start_pulse_id)
+
+        # pulse_id = int((pulse_mixup.get(idx, idx) + self.iter // self.data.shape[0]) * 10 + 1e5)
+
         _md = {
             'is_good_frame': True,
             'pedestal_file': '/home/edorofee/BeamlineData/SwissFEL/JU/20230414_100746.h5',
@@ -91,9 +107,9 @@ class ProcessedDataStreamEmulator(DaqStreamEmulator):
             'number_of_streaks': len(streaks_t),
             'streaks': streaks,
             'is_white_field_corrected': True,
-            'pulse_id': int(self.iter*10 + 1e5),
+            'pulse_id': pulse_id,
         }
-
+        print(pulse_id)
         self.md.update(_md)
         return im
 
@@ -103,12 +119,15 @@ class ProcessedDataStreamEmulator(DaqStreamEmulator):
 
 
 if __name__ == "__main__":
-    df = "/home/edorofee/BeamlineData/SwissFEL/JU/i3c_pat_sim.npy"
+    start_pulse_id = 552300
     if len(sys.argv) >= 2:
-        df = sys.argv[1]
+        start_pulse_id = int(sys.argv[1])
     rate = 0.5
     if len(sys.argv) >= 3:
-        rate = sys.argv[2]
-    publisher = ProcessedDataStreamEmulator(data_file=df, rate_s=rate)
+        rate = float(sys.argv[2])
+    df = "/home/edorofee/BeamlineData/SwissFEL/JU/i3c_pat_sim.npy"
+    if len(sys.argv) >= 4:
+        df = sys.argv[3]
+    publisher = ProcessedDataStreamEmulator(start_pulse_id=start_pulse_id, data_file=df, rate_s=rate)
     publisher.run()
 

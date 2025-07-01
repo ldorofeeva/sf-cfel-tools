@@ -64,6 +64,7 @@ class DaqStreamEmulator:
             message = self._gen_data_frame()
             self.md["shape"] = message.shape
             self.md["type"] = message.dtype.name
+            self.md["pulse_id"] = 1e5 + self.iter*10
             self.pub_sock.send_json(self.md, FLAGS | zmq.SNDMORE)
             self.pub_sock.send(
                 message,
