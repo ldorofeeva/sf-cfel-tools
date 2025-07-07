@@ -26,8 +26,7 @@ Data file example (lysosime, default):
 
 ##### 1.1 Launch stream simulator:
 ```
-source /sf/jungfrau/applications/miniconda3/etc/profile.d/conda.sh
-conda activate dap-clone
+conda activate dap-sf-new
 
 cd /das/work/p22/p22263/git/sf-cfel-tools/dap_test
 python publisher.py
@@ -52,8 +51,7 @@ Updated Code directory: `/das/work/p22/p22263/git/dap`
 
 ##### 2.1 Launch DAP:
 ```
-source /sf/jungfrau/applications/miniconda3/etc/profile.d/conda.sh
-conda activate dap-clone
+conda activate dap-sf-new
 
 cd /das/work/p22/p22263/git/dap
 export PYTHONPATH=`pwd` 
