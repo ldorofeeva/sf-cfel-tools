@@ -83,7 +83,7 @@ if __name__ == "__main__":
     df = "/sf/bernina/exp/25g_chapman/work/data/sim_raw.npy"
     if len(sys.argv) >= 2:
         df = sys.argv[1]
-    rate = 1
+    rate = 0.5
     if len(sys.argv) >= 3:
         rate = sys.argv[2]
     publisher = DaqStreamEmulator(data_file=df, rate_s=rate)
