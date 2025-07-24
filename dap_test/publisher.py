@@ -32,16 +32,16 @@ class DaqStreamEmulator:
         self.md = {
             "shape": (2, 2),  # Empty frame
             "is_good_frame": True,
-            "pedestal_file": "/sf/jungfrau/data/pedestal/JF07T32V01/20230414_100746.h5",  # "/sf/bernina/exp/example_data/Ge_tt/pedestal_20190304_0545.JF07T32V01.res.h5",
-            "detector_name": "JF07T32V01",
-            "gain_file": "/sf/jungfrau/config/gainMaps/JF07T32V01/gains.h5"
+            "pedestal_file": "/sf/jungfrau/data/pedestal/JF07T32V02/20250701_141020.h5",
+            "detector_name": "JF07T32V02",
+            "gain_file": "/sf/jungfrau/config/gainMaps/JF07T32V02/gains.h5"
         }
         self.iter = 0
 
     def load_data(self):
         if self.data_file.endswith(".h5"):
             with File(self.data_file, "r") as df:
-                self.data = np.asarray(df["data/data"])
+                self.data = np.asarray(df["data/JF07T32V02/data"])
         elif self.data_file.endswith(".npy"):
             self.data = np.load(self.data_file)
 
@@ -80,10 +80,10 @@ class DaqStreamEmulator:
 
 
 if __name__ == "__main__":
-    df = "/sf/bernina/exp/25g_chapman/work/data/sim_raw.npy"
+    df = "/sf/bernina/exp/25g_chapman/work/data/sim_raw2.npy"
     if len(sys.argv) >= 2:
         df = sys.argv[1]
-    rate = 0.5
+    rate = 1
     if len(sys.argv) >= 3:
         rate = sys.argv[2]
     publisher = DaqStreamEmulator(data_file=df, rate_s=rate)
