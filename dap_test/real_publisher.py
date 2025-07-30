@@ -60,6 +60,8 @@ class DaqStreamEmulator:
             self.i_index = 0
             self.o_index += 1
             self.current_file = self.files[self.o_index % len(self.files)]
+            with File(self.current_file, "r") as df:
+                self.frames_in_current_file = df[JF_DATASET].shape[0]
 
         with File(self.current_file, "r") as df:
             frame = df["data/JF07T32V02/data"][self.i_index]
@@ -83,14 +85,14 @@ class DaqStreamEmulator:
             message = self._gen_data_frame()
             self.md["shape"] = message.shape
             self.md["type"] = message.dtype.name
-            self.md["pulse_id"] = 1e5 + self.iter
+            self.md["pulse_id"] = int(1e5 + self.iter)
             self.pub_sock.send_json(self.md, FLAGS | zmq.SNDMORE)
             self.pub_sock.send(
                 message,
                 FLAGS,
                 copy=False,
             )
-
+            #print(f"PUB im shape {message.shape} type {message.dtype.name}")
             self.iter += 1
 
     def close(self):
